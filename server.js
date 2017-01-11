@@ -21,6 +21,7 @@ app.set('view engine', 'pug');
 
 // Routes
 app.use('/', require('./routes/home'));
+app.use('/explore', require('./routes/explore'));
 
 // app.get('/', (req, res) => {
 //   res.send('It works');

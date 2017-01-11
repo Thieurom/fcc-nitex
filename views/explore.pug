@@ -1,0 +1,15 @@
+extends layout.pug
+
+
+block header_content
+  a(href='/').left
+    .brand-logo NitEx
+
+  form.form.left(method='GET', action='/explore')
+    input.form__search.form__search--small(type='text', placeholder='Where you at', name='location', value= location || '')
+
+  nav.nav.right
+    button.nav__item(type='button', data-modal='login') #[i.fa.fa-user-circle]
+
+block main_content
+  .card-wrapper
