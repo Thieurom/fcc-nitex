@@ -1,0 +1,24 @@
+doctype html
+
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name='description', content='Nightlife Exploration')
+    meta(name='viewport', content='width=device-width,initial-scale=1')
+    title= 'Nightlife Exploration'
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Roboto:300,400,500')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/css/styles.css')
+
+  body
+    header.header
+      .header-wrapper
+        block header_content
+
+    main.main
+      block main_content
+
+    footer.footer
+      span 2017. #[a.link(href='/') Nitex]. Made by #[a.link(href='https://twitter.com/lethieu') lethieu]
+
+    script(src='/js/main.js')

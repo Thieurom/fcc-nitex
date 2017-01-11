@@ -1,0 +1,17 @@
+extends layout.pug
+
+
+block header_content
+  a(href='/').left
+    .brand-logo NitEx
+
+  nav.nav.right
+    button.nav__item(type='button', data-modal='login') #[i.fa.fa-user-circle]
+
+block main_content
+  .hero-wrapper
+    .hero
+      h1 Find the best nightlife exprerience!
+      form.form(method='GET', action='/explore')
+        input.form__search(type='text', placeholder='Where you at')
+        input.form__submit(type='submit', value='Search')
