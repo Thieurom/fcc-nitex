@@ -1,6 +1,7 @@
 'use strict'
 
 // Depedencies
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
@@ -22,10 +23,6 @@ app.set('view engine', 'pug');
 // Routes
 app.use('/', require('./routes/home'));
 app.use('/explore', require('./routes/explore'));
-
-// app.get('/', (req, res) => {
-//   res.send('It works');
-// });
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);

@@ -9,6 +9,7 @@ body {
   font-family: "Roboto", "Helvetica", sans-serif;
   font-size: 1rem;
   font-weight: 300;
+  background-color: #0E1674;
 }
 
 h1 {
@@ -242,16 +243,19 @@ a {
 
 .card {
   max-width: 700px;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  padding-top: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   margin: 0 auto;
 }
 .card__figure {
   width: 200px;
   height: 140px;
   margin-bottom: 20px;
-  background-color: #00FBC3;
+  background-color: rgba(#00FBC3);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 @media (min-width: 538px) {
   .card__figure {
@@ -368,9 +372,8 @@ a {
 }
 
 .card-wrapper {
-  min-height: calc(100vh - 120px);
-  padding: 60px 20px;
-  background-color: #0E1674;
+  min-height: calc(100vh - 180px);
+  padding: 60px 20px 120px;
   color: #fff;
 }
 @media (min-width: 538px) {

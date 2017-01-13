@@ -1,0 +1,11 @@
+each venue in venues
+  .card
+    .card__figure(style= 'background-image:url("' + venue.photo + '")')
+    .card__content
+      .card__title
+        h2 #[a(href= 'https://foursquare.com/v/' + venue.id)= venue.name]
+      p.card__subheading= venue.address
+
+      p.card__heading= venue.tips
+
+      button.button.button--small(type='button') Attendees
