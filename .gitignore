@@ -38,3 +38,6 @@ jspm_packages
 
 # Dev. environmental variables
 .env
+
+# Dev. database
+devdb/

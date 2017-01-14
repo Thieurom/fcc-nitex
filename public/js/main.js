@@ -3,34 +3,36 @@
 
   var form = document.querySelector('.form');
 
-  form.addEventListener('submit', function (e) {
-    if (!form.location.value) {
-      return e.preventDefault();
-    }
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      if (!form.location.value) {
+        return e.preventDefault();
+      }
 
-    if (window.location.pathname === '/explore') {
-      e.preventDefault();
+      if (window.location.pathname === '/explore') {
+        e.preventDefault();
 
-      var query = form.location.value;
-      var encodedQuery = encodeURIComponent(query).replace(/%20/g, '+');
+        var query = form.location.value;
+        var encodedQuery = encodeURIComponent(query).replace(/%20/g, '+');
 
-      // Load new content to DOM
-      loadSearchResult(encodedQuery);
+        // Load new content to DOM
+        loadSearchResult(encodedQuery);
 
-      // Update history
-      window.history.pushState('', query, '?location=' + encodedQuery);
+        // Update history
+        window.history.pushState('', query, '?location=' + encodedQuery);
 
-      // Remove focus from search box
-      form.location.blur();
-    }
-  });
+        // Remove focus from search box
+        form.location.blur();
+      }
+    });
+  }
 
 
   // Handle back/forward on history
   window.onpopstate = function () {
     var url = window.location.href;
     var encodedQuery = url.substr(ulr.indexOf('location') + 9);
-    var query = encodedQuery.replace(/+/g, ' ');
+    var query = encodedQuery.replace(/\+/g, ' ');
 
     // Put the query on the search box
     form.location.value = query;
@@ -40,7 +42,7 @@
   }
 
 
-  function loadSearchResult(query) {
+  function loadSearchResult(encodedQuery) {
     var xhr = new XMLHttpRequest();
 
     // Clear the current content
@@ -50,10 +52,15 @@
       if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
         var results = JSON.parse(xhr.responseText);
 
-        results.forEach(function (result) {
-          var card = createCardComponent(result);
+        if (results.length === 0) {
+          var card = createErrorCard(encodedQuery.replace(/\+/g, ' '));
           document.querySelector('.card-wrapper').appendChild(card);
-        });
+        } else {
+          results.forEach(function (result) {
+            var card = createContentCard(result);
+            document.querySelector('.card-wrapper').appendChild(card);
+          });
+        }
       }
     }
 
@@ -63,7 +70,7 @@
   }
 
 
-  function createCardComponent(data) {
+  function createContentCard(data) {
     var card = document.createElement('div');
     card.className = 'card';
 
@@ -98,11 +105,24 @@
     var cardAction = document.createElement('button');
     cardAction.type = 'button';
     cardAction.className = 'button button--small';
-    cardAction.textContent = 'Attendees';
+    cardAction.textContent = data.attendees + ' Attendee' + (data.attendees > 1 ? 's' : '');
     cardContent.appendChild(cardAction);
 
     card.appendChild(cardFigure);
     card.appendChild(cardContent);
+
+    return card;
+  }
+
+
+  function createErrorCard(query) {
+    var card = document.createElement('div');
+    var title = document.createElement('h4');
+
+    card.className = 'card card--nocontent';
+    title.textContent = 'Sorry! We couldn\'t find any venue near \'' + query + '\'.';
+
+    card.appendChild(title);
 
     return card;
   }
