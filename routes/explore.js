@@ -14,6 +14,9 @@ router.get('/', (req, res) => {
       return next(err);
     }
 
+    // Set the max-age for resources at 12 hours
+    res.set({ 'Cache-Control': 'max-age=' + 12 * 3600 });
+
     if (req.xhr || req.accepts('html', 'json') === 'json') {
       return res.status(200).json(result);
     } else {

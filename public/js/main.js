@@ -1,6 +1,6 @@
-'use strict'
-
 (function () {
+  'use strict'
+
   var form = document.querySelector('.form');
 
   form.addEventListener('submit', function (e) {
@@ -14,9 +14,6 @@
       var query = form.location.value;
       var encodedQuery = encodeURIComponent(query).replace(/%20/g, '+');
 
-      // Clear the current content
-      document.querySelector('.card-wrapper').textContent = '';
-
       // Load new content to DOM
       loadSearchResult(encodedQuery);
 
@@ -29,8 +26,25 @@
   });
 
 
+  // Handle back/forward on history
+  window.onpopstate = function () {
+    var url = window.location.href;
+    var encodedQuery = url.substr(ulr.indexOf('location') + 9);
+    var query = encodedQuery.replace(/+/g, ' ');
+
+    // Put the query on the search box
+    form.location.value = query;
+
+    // Load respective content into DOM
+    loadSearchResult(encodedQuery);
+  }
+
+
   function loadSearchResult(query) {
     var xhr = new XMLHttpRequest();
+
+    // Clear the current content
+    document.querySelector('.card-wrapper').textContent = '';
 
     xhr.onreadystatechange = function () {
       if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -43,7 +57,7 @@
       }
     }
 
-    xhr.open('GET', '/explore?location=' + query, true);
+    xhr.open('GET', '/explore?location=' + encodedQuery, true);
     xhr.setRequestHeader('Accept', 'application/json');
     xhr.send(null);
   }
