@@ -8,4 +8,7 @@ each venue in venues
 
       p.card__heading= venue.tips
 
-      button.button.button--small(type='button') Attendees
+      if venue.userAttendance
+        button.button.button--small.button--check(type='button')= venue.attendees + ' Attendee' + (venue.attendees > 1 ? 's' : '')
+      else
+        button.button.button--small(type='button')= venue.attendees + ' Attendee' + (venue.attendees > 1 ? 's' : '')

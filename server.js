@@ -27,6 +27,7 @@ app.set('view engine', 'pug');
 // Routes
 app.use('/', require('./routes/home'));
 app.use('/explore', require('./routes/explore'));
+app.use('/venue', require('./routes/venue'));
 
 // Catch 404 error
 app.use((req, res, next) => {
@@ -42,7 +43,7 @@ app.use((err, req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  if (req.xhr || req.accepts('html', 'json') === 'json') {
+  if (req.xhr) {
     res.status(500).end();
   } else {
     next(err);

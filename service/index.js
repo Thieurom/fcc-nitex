@@ -11,7 +11,7 @@ const FS_API_URL = 'https://api.foursquare.com/v2/venues/explore';
 const FS_CATEGORY = '4bf58dd8d48988d116941735';
 const FS_API_DATE = 20161016;
 
-module.exports = function (query, done) {
+module.exports = function (userId, query, done) {
   const parameter = {
     v: FS_API_DATE,
     client_id: FS_API_ID,
@@ -28,7 +28,7 @@ module.exports = function (query, done) {
     if (err) {
       done(err);
     } else if (response.statusCode === 200) {
-      parseResponse(body, (error, result) => {
+      parseResponse(userId, body, (error, result) => {
         if (error) {
           done(error);
         } else {
@@ -43,7 +43,7 @@ module.exports = function (query, done) {
 
 
 // Helpers
-function parseResponse(data, callback) {
+function parseResponse(userId, data, callback) {
   const rawData = JSON.parse(data);
   let items;
   let collection;
@@ -57,10 +57,21 @@ function parseResponse(data, callback) {
     } else {
       callback(null, items.map(function (item) {
         let attendees = 0;
+        let userAttendance = false;
 
         for (let i = 0, length = result.length; i < length; i++) {
           if (item.venue.id === result[i].venueId) {
             attendees = result[i].attendees.length;
+
+            if (userId !== undefined) {
+              for (let j = 0; j < result[i].attendees.length; j++) {
+                if (userId === result[i].attendees[j]) {
+                  userAttendance = true;
+                  break;
+                }
+              }
+            }
+
             break;
           }
         }
@@ -68,10 +79,11 @@ function parseResponse(data, callback) {
         return {
           id: item.venue.id,
           name: item.venue.name,
-          address: item.venue.location.address + ', ' + item.venue.location.city + ', ' + item.venue.location.state,
+          address: item.venue.location.formattedAddress.join(', '),
           photo: item.venue.photos.groups[0].items[0].prefix + 'original' + item.venue.photos.groups[0].items[0].suffix,
           tips: item.tips ? item.tips[0].text : '',
-          attendees: attendees
+          attendees: attendees,
+          userAttendance: userAttendance
         };
       }));
     }
