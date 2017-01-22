@@ -70,6 +70,25 @@ a {
   }
 }
 
+.avatar {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  border: 2px solid #00FBC3;
+  border-radius: 50%;
+  background-color: #00FBC3;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  vertical-align: middle;
+}
+@media (min-width: 538px) {
+  .avatar {
+    width: 35px;
+    height: 35px;
+  }
+}
+
 .nav__item {
   display: inline-block;
   border: 0;
@@ -92,6 +111,7 @@ a {
 
 .button, .form__submit {
   box-sizing: border-box;
+  display: inline-block;
   height: 45px;
   padding: 0 2em;
   border: 0;
@@ -100,6 +120,7 @@ a {
   font-family: "Roboto", "Helvetica", sans-serif;
   font-size: 1rem;
   font-weight: 400;
+  line-height: 45px;
   background-color: rgba(0, 251, 195, 0.8);
   color: #fff;
   user-select: none;
@@ -119,7 +140,7 @@ a {
   background-color: #4A90E2;
 }
 .button--alt:hover {
-  background-color: rgba(14, 22, 116, 0.9);
+  background-color: rgba(74, 144, 226, 0.9);
 }
 .button--danger {
   background-color: #DD6775;
@@ -131,6 +152,7 @@ a {
   height: 30px;
   padding: 0 1.1em;
   font-size: 0.9rem;
+  line-height: 30px;
 }
 .button--secondary {
   border: 1px solid #00FBC3;
@@ -148,6 +170,7 @@ a {
   position: absolute;
   left: 1em;
   font-size: 1.2em;
+  line-height: inherit;
 }
 .button--check:after {
   margin-left: 1ex;
@@ -210,7 +233,7 @@ a {
 }
 
 .modal {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -226,7 +249,11 @@ a {
   z-index: 3;
 }
 .modal__wrapper {
-  margin: 100px auto 0;
+  position: absolute;
+  top: 200px;
+  left: 50%;
+  width: 90%;
+  transform: translate(-50%,0);
   background-color: #fff;
 }
 @media (min-width: 538px) {

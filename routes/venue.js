@@ -1,37 +1,34 @@
 'use strict'
 
 const express = require('express');
-const db = require('../db');
+const Venue = require('../model/venue');
+const requireLogin = require('../config/requireLogin');
 
 
 const router = express.Router();
 
-router.put('/:venueId', (req, res, next) => {
+router.put('/:venueId', requireLogin, (req, res, next) => {
   if (req.xhr) {
     const venueId = req.params.venueId;
-    const collection = db.get().collection('nitex-venues');
-    const userId = 'abc123456789';
+    const userId = req.user._id.toString();
 
     if (req.body.attend) {
-      collection.updateOne({ venueId: venueId },
-        { $push: { attendees: userId } },
-        { upsert: true }, (err, result) => {
-          if (err) {
-            return next(err);
-          }
+      Venue.addAttendee(venueId, userId, (err, result) => {
+        if (err) {
+          return next(err);
+        }
 
-          res.status(204).end();
-        });
+        res.status(204).end();
+      });
 
     } else {
-      collection.updateOne({ venueId: venueId },
-        { $pop: { attendees: 1 } }, (err, result) => {
-          if (err) {
-            return next(err);
-          }
+      Venue.removeAttendee(venueId, userId, (err, result) => {
+        if (err) {
+          return next(err);
+        }
 
-          res.status(204).end();
-        })
+        res.status(204).end();
+      });
     }
 
   } else {

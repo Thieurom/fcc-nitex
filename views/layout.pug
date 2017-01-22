@@ -18,5 +18,30 @@ html(lang='en')
 
     footer.footer
       span 2017. #[a.link(href='/') Nitex]. Made by #[a.link(href='https://twitter.com/lethieu') lethieu].
+    
+    if user
+      .modal.logout
+        .modal__wrapper
+          .modal__header
+            h3 Nitex
+            
+          .modal__main
+            .modal__hint
+              span Hope you come back soon!
+          
+            a(href='/auth/logout').button.button--fullwidth.button--danger.button--icon #[i.fa.fa-sign-out.button--icon__icon] Sign out
+
+    else
+      .modal.login
+        .modal__wrapper
+          .modal__header
+            h3 Nitex
+            
+          .modal__main
+            .modal__hint
+              span Login to bookmark your favorite venues.
+          
+            a(href='/auth/login/twitter').button.button--fullwidth.button--alt.button--icon #[i.fa.fa-twitter.button--icon__icon] Login with Twitter
+      
 
     script(src='/js/main.js')

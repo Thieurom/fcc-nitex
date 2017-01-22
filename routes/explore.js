@@ -8,16 +8,22 @@ const router = express.Router();
 
 router.get('/', (req, res, next) => {
   const location = req.query.location;
-  const userId = 'abc123456789';
+  let userId;
 
   if (typeof location !== 'undefined') {
+    if (req.isAuthenticated()) {
+      userId = req.user._id.toString();
+    }
+
     service(userId, location, (err, result) => {
       if (err) {
         return next(err);
       }
 
-      // Set the max-age for resources at 12 hours
       res.set({ 'Cache-Control': 'no-cache' });
+
+      // Save the current url to session
+      req.session.lastQuery = '/explore?location=' + location.replace(/\s+/g, '+');
 
       if (req.xhr) {
         return res.status(200).json(result);

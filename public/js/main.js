@@ -23,33 +23,44 @@
     }
 
     return function (e) {
-      var attendees;
-      var target = e.target;
-      var cardEl = this.parentNode;
-      var link = cardEl.querySelector('a');
-      var venueId = link.href.substr(link.href.lastIndexOf('/') + 1);
+      var modal = document.querySelector('.modal');
 
-      // Attend to the selected venue
-      if (this.classList.contains('button--check')) {
-        attendees = parseInt(this.textContent.split(' ')[0]) - 1;
-        this.classList.remove('button--check');
-        request = false;
+      if (modal.classList.contains('login')) {
+        // User didn't login
+        // Display login modal
+        modal.classList.add('show');
 
-        // Remove from attendence list
       } else {
-        attendees = parseInt(this.textContent.split(' ')[0]) + 1;
-        this.classList.add('button--check');
-        request = true;
+        // User logged in
+        var attendees;
+        var target = e.target;
+        var cardEl = this.parentNode;
+        var link = cardEl.querySelector('a');
+        var venueId = link.href.substr(link.href.lastIndexOf('/') + 1);
+
+        // Attend to the selected venue
+        if (this.classList.contains('button--check')) {
+          attendees = parseInt(this.textContent.split(' ')[0]) - 1;
+          this.classList.remove('button--check');
+          request = false;
+
+          // Remove from attendence list
+        } else {
+          attendees = parseInt(this.textContent.split(' ')[0]) + 1;
+          this.classList.add('button--check');
+          request = true;
+        }
+
+        // Display updated attendees number
+        this.textContent = attendees + ' Attendee' + (attendees > 1 ? 's' : '')
+
+        sendRequest(venueId);
       }
-
-      // Display updated attendees number
-      this.textContent = attendees + ' Attendee' + (attendees > 1 ? 's' : '')
-
-      sendRequest(venueId);
     }
   })();
 
 
+  // Search venues
   var lastQuery = '';
   var form = document.querySelector('.form');
 
@@ -101,6 +112,33 @@
 
   // Handle clicking to attend/out
   setupCheckButtons();
+
+
+  // Handle login/logout
+  var navBtn = document.querySelector('.nav__item');
+  var modalPanels = document.querySelectorAll('.modal');
+
+  navBtn.addEventListener('click', function () {
+    var modalName = navBtn.getAttribute('data-modal');
+    var modal = document.querySelector('.modal.' + modalName);
+
+    if (!modal.classList.contains('show')) {
+      modal.classList.add('show');
+    }
+  });
+
+
+  [].slice.call(modalPanels).forEach(function (modal) {
+    modal.addEventListener('click', function (e) {
+      var target = e.target;
+
+      e.stopPropagation();
+
+      if (target.classList.contains('show')) {
+        target.classList.remove('show');
+      }
+    });
+  });
 
 
   //=====================================//

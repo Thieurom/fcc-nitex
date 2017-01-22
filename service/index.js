@@ -42,7 +42,7 @@ module.exports = function (userId, query, done) {
 }
 
 
-// Helpers
+// Parse data from Fourtsquare API response
 function parseResponse(userId, data, callback) {
   const rawData = JSON.parse(data);
   let items;

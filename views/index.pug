@@ -8,7 +8,10 @@ block header
         .brand-logo NitEx
 
       nav.nav.right
-        button.nav__item(type='button', data-modal='login') #[i.fa.fa-user-circle]
+        if user
+          button.nav__item(type='button', data-modal='logout') #[span.avatar(style= 'background-image:url("' + user.twitterAvatar + '")')]
+        else
+          button.nav__item(type='button', data-modal='login') #[i.fa.fa-user-circle]
 
 block main_content
   .hero-wrapper
