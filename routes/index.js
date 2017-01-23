@@ -9,7 +9,7 @@ module.exports = (app) => {
   });
 
 
-  // Register routes to app
+// Register routes
   app.use('/', require('./home'));
   app.use('/explore', require('./explore'));
   app.use('/venue', require('./venue'));
@@ -18,7 +18,7 @@ module.exports = (app) => {
 
   // Catch 404 error
   app.use((req, res, next) => {
-    let err = new Error('Not Found');
+    let err = new Error();
     err.status = 404;
     next(err);
   });
@@ -40,7 +40,7 @@ module.exports = (app) => {
 
   app.use((err, req, res, next) => {
     if (err.status === 404) {
-      res.render('error', { error: err.message });
+      res.render('error', { error: 'Not Found' });
     } else {
       res.render('error', { error: 'Internal Server Error' });
     }

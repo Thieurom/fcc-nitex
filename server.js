@@ -4,9 +4,10 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const path = require('path');
+const favicon = require('serve-favicon');
 
 const passport = require('./config/passport');
 const db = require('./db');
@@ -23,11 +24,15 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cookieParser(COOKIE_SECRET));
+app.use(favicon(path.join(__dirname, 'favicon.ico')));
 app.use(session({
   secret: COOKIE_SECRET,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 4 * 7 * 24 * 60 * 60 * 1000,  // 4 weeks
+    store: new MongoStore({ url: DATABASE })
+  }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -41,7 +46,7 @@ app.set('view engine', 'pug');
 require('./routes')(app);
 
 
-// Connect to database
+// Connect to database, establish server
 db.connect(DATABASE, (error) => {
   if (error) {
     console.log(error);

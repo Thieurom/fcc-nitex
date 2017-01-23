@@ -18,7 +18,7 @@ module.exports = function (userId, query, done) {
     client_secret: FS_API_SECRET,
     categoryId: FS_CATEGORY,
     venuePhotos: 1,
-    limit: 10,
+    limit: 20,
     near: query
   };
 
