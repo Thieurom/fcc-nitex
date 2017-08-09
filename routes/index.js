@@ -15,6 +15,10 @@ module.exports = (app) => {
   app.use('/venue', require('./venue'));
   app.use('/auth', require('./auth'));
 
+    // this route is temporarily used for client-side rendering by React
+    app.use('/development', require('./development'));
+
+
 
   // Catch 404 error
   app.use((req, res, next) => {
