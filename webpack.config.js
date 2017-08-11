@@ -12,7 +12,9 @@ const config = {
     },
     module: {
         rules: [
-            { test: /\.(js)$/, use: 'babel-loader' }
+            { test: /\.(js)$/, use: 'babel-loader' },
+            { test: /\.css$/, use: ['style-loader', 'css-loader?modules&importLoaders=1&localIdentName=_[hash:base64:5]'] },
+            { test: /\.(png|jpg|gif)$/, use: 'url-loader' }
         ]
     },
     devServer: {

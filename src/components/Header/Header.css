@@ -1,0 +1,76 @@
+.header {
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: #fff;
+}
+
+@media (min-width: 538px) {
+    .header {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}
+
+
+.container {
+    composes: container from '../app.css';
+}
+
+
+.inner {
+    display: flex;
+    align-items: center;
+    height: 60px;
+}
+
+
+.site {
+}
+
+
+.logo {
+    display: inline-block;
+    margin-right: 20px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+@media (min-width: 538px) {
+    .logo {
+        width: 60px;
+        font-size: 1.5rem;
+    }
+}
+
+
+.nav {
+    margin-left: auto;
+}
+
+
+.button {
+    display: inline-block;
+    border: 0;
+    padding: 0;
+    background-color: transparent;
+    color: inherit;
+    font-family: "Roboto", "Helvetica", sans-serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.button:focus {
+    outline: 0;
+}
+
+@media (min-width: 538px) {
+    .button {
+        font-size: 1.5rem;
+    }
+}

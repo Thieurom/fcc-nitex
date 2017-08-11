@@ -1,0 +1,22 @@
+.footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    height: 50px;
+    line-height: 50px;
+    color: #fff;
+    text-align: center;
+}
+
+
+.container {
+    composes: container from '../app.css';
+}
+
+
+.link {
+    font-weight: 400;
+    color: #00FBC3;
+}
