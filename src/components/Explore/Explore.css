@@ -1,0 +1,5 @@
+.explore {
+    min-height: calc(100vh - 180px);
+    padding: 60px 20px 120px;
+    color: #fff;
+}
