@@ -6,9 +6,9 @@ const webpack = require('webpack');
 const config = {
     entry: './src/index.js',
     output: {
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'public/js'),
         filename: 'app.js',
-        publicPath: '/'
+        publicPath: '/js'
     },
     module: {
         rules: [
@@ -18,6 +18,13 @@ const config = {
         ]
     },
     devServer: {
+        inline: true,
+        port: 8080,
+        proxy: {
+            '/': {
+                target: 'http://localhost:3000/'
+            }
+        },
         historyApiFallback: true
     },
     plugins: [

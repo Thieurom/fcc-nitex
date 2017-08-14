@@ -8,6 +8,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const path = require('path');
 const favicon = require('serve-favicon');
+const morgan = require('morgan');
 
 const passport = require('./config/passport');
 const db = require('./db');
@@ -21,6 +22,7 @@ const COOKIE_SECRET = process.env.COOKIE_SECRET;
 const app = express();
 
 // Setup middlewares
+app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -43,7 +45,25 @@ app.set('view engine', 'pug');
 
 
 // Routes
-require('./routes')(app);
+// require('./routes')(app);
+app.use('/search', require('./routes/search'));
+app.get('*', (req, res, next) => {
+    res.sendFile(path.resolve(__dirname, './src/index.html'));
+});
+
+// Log errors and forward to error handler
+app.use((req, res, next) => {
+    console.log(err.stack);
+    next(err);
+});
+
+// Error handler
+app.use((err, req, res, next) => {
+    res.status(err.status || 500).json({
+        status: 'ERROR',
+        message: err.message
+    });
+});
 
 
 // Connect to database, establish server

@@ -7,7 +7,7 @@ import {
     Link
 } from 'react-router-dom';
 import Home from './components/Home/Home';
-import Explore from './components/Explore/Explore';
+import ExploreWithRouter from './components/Explore/Explore';
 import styles from './components/app.css';
 
 
@@ -15,7 +15,7 @@ const App = () => (
     <Router>
         <Switch>
             <Route path='/' exact component={Home} />
-            <Route path='/explore' component={Explore} />
+            <Route path='/explore' component={ExploreWithRouter} />
         </Switch>
     </Router>
 );

@@ -14,7 +14,7 @@ const Header = (props) => {
                     </div>
 
                     {props.onExplore && (
-                         <Search />)}
+                         <Search query={props.exploreItem} onSubmit={props.handleSearch}/>)}
 
                     <nav className={styles.nav} role='navigation'>
                         <button className={styles.button}><i className="fa fa-user-circle"></i></button>
